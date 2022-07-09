@@ -13,8 +13,7 @@ const Home = () => {
 		<div className="container-fluid">
 			<h1>Todo list</h1>
 				<TaskInput addItem={addItem} />
-				{list.map((li)=><li>{li}</li>)
-				}
+				{list.map((li,index)=><li key={`${li}-${index}`}>{li}</li>)}
 		</div>
 	)
 }
