@@ -1,24 +1,22 @@
 import React, { useState } from "react";
+import TaskInput from "./taskinput.jsx";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	const [color,setColor] = useState('white')
-	return (
-	<div style ={
-		{
-		minwidth:'100vw',
-		minHeight: '100vh',
-		background: color,
-		display: "flex",
-		justifycontent: "center",
-		alignitems: "center"
+	const [list, setlist]= useState([])
+	const addItem = (li) =>{
+		const newList =[...list]
+		newList.push(li)
+		setlist(newList)
+		console.log(newList)
 	}
-}><toDoList property={value}/>
-<input
-	);
-};
+	return(
+		<div className="container-fluid">
+			<h1>Todo list</h1>
+				<TaskInput addItem={addItem} />
+				{list.map((li)=><li>{li}</li>)
+				}
+		</div>
+	)
+}
 
 export default Home;
