@@ -20,3 +20,27 @@ h1{
     margin-left: 14px;
     margin-right: 0px;
 }
+.Headerlist{
+    text-align: center;
+}
+input {
+    width: 348px;
+    justify-content: center;
+}
+.DelButton{
+    background-color: black;
+    color: white;
+    float: right;
+    margin-right: 30px;
+}
+footer{
+    margin-top: 5px;
+}
+.DelallButton{
+    float: right;
+    width: 60px;
+    height: 30px;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+}

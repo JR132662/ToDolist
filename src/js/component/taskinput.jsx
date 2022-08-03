@@ -13,7 +13,7 @@ const TaskInput = (props) => {
 
     return (
         <div className="container-fluid">
-        <input
+        <input className="Inputbox"
          type="text" 
          onChange={e => setInputValue(e.target.value)} 
          value={inputValue} 
