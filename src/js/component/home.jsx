@@ -5,30 +5,61 @@ const Home = () => {
 	const [list, setlist]= useState([])
 	const [hoveredIndex, sethoveredIndex]= useState(-1)
 	const addItem = (li) =>{
-		console.log(li,"li")
+		console.log(li,)
 		const newList =[...list]
-		newList.push(li)
+		newList.push({label:li,done:false})
 		setlist(newList)
 		console.log(newList)
+		updateApi(newList)
 	}
 	const Deleteitem = (index) => {
 		const newList = [...list]
 		newList.splice(index, 1)
 		setlist(newList)
-
+		updateApi(newList)
+	}
+	const Clearall = () => {
+		setlist([])
+		fetch('https://assets.breatheco.de/apis/fake/todos/user/JonaR',{
+		method: "Delete",
+		headers: {
+			"Content-Type": "application/json"
+		}
+	}).then((resp)=>{
+		if (resp.status == 200){
+			return resp.json();
+		}
+	});
+}
+	const createTodos = () => {
+	fetch('https://assets.breatheco.de/apis/fake/todos/user/JonaR', {
+	method: 'POST',
+	body:JSON.stringify([]),
+	headers: {
+	"Content-Type": "application/json"
+	}
+	})
+	.then((resp) => {
+	console.log(resp);
+	if (!resp.ok){
+	throw new Error(
+	`${resp.status} - ${resp.statusText}`
+	);
+	}
+	getAllTodos ()
+	})
+	
 	}
 	const getAllTodos = () =>{
 		fetch('https://assets.breatheco.de/apis/fake/todos/user/JonaR')
 			.then((resp)=>{
 				if(!resp.ok){
-					throw new Error(
-						`${resp.status} - ${resp.statusText}`
-					);
+					createTodos()
 				}
 				return resp.json()
 			})
 			.then((data)=>{
-				setlist([data[0].label])
+				setlist(data)
 			})
 	}
 	const updateApi = (todos) => {
@@ -67,7 +98,7 @@ const Home = () => {
 						<li onMouseEnter={()=>sethoveredIndex(index)}
 						onMouseLeave = {()=>sethoveredIndex(-1)}
 						key={`${li}-${index}`}>
-							{li}
+							{li.label}
 							{hoveredIndex===index &&
 							<button className="DelButton" onClick={() => Deleteitem(index)}>X</button>
 							}
@@ -76,7 +107,7 @@ const Home = () => {
 				}
 				)}
 				<footer>{list.length + " items left"}</footer>
-				<button className="DelallButton" onClick={() => setlist([])}>Clear</button>
+				<button className="DelallButton" onClick={Clearall}>Clear</button>
 		</div>
 	)
 };
